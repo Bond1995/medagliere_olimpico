@@ -29,7 +29,7 @@ public class MedagliereMain {
 		
 	}
 	
-	public static void eseguiScelta(int scelta) {
+	private static void eseguiScelta(int scelta) {
 		
 		switch (scelta) {
 		
@@ -47,7 +47,7 @@ public class MedagliereMain {
 		
 	}
 	
-	public static void addNazione(ElencoNazioni mieNazioni) {
+	private static void addNazione(ElencoNazioni mieNazioni) {
 		
 		System.out.println(MESS_NUOVA_NAZIONE);
 		String nomeNazione = MyUtil.leggiStringaConSpazi();
@@ -62,7 +62,7 @@ public class MedagliereMain {
 		
 	}
 	
-	public static void addGara(ElencoGare mieGare) {
+	private static void addGara(ElencoGare mieGare) {
 		
 		System.out.println(MESS_NUOVA_GARA);
 		String nomeGara = MyUtil.leggiStringaConSpazi();
@@ -77,29 +77,37 @@ public class MedagliereMain {
 		
 	}
 	
-	public static void addRisultato(ElencoNazioni mieNazioni, ElencoGare mieGare) {
+	private static void addRisultato(ElencoNazioni mieNazioni, ElencoGare mieGare) {
 		
 		System.out.println(MESS_INSERISCI_GARA);
 		String nomeGara = MyUtil.leggiStringaConSpazi();
+		boolean scelta = true;
 		
 		if (!mieGare.contiene(nomeGara)) System.out.println(ERRORE_GARA_NON_PRESENTE);
 		else {
 			
-			Nazione nazioneOro = assegnaMedaglia(MESS_NAZIONE_ORO, mieNazioni);
-			Nazione nazioneArgento = assegnaMedaglia(MESS_NAZIONE_ARGENTO, mieNazioni);
-			Nazione nazioneBronzo = assegnaMedaglia(MESS_NAZIONE_BRONZO, mieNazioni);
+			if (mieGare.getNazione(nomeGara).haRisultato)
+				scelta = MyUtil.yesOrNo(RICHIESTA_NUOVO_RISULTATO);
 			
-			Gara gara = mieGare.getGara(nomeGara);
-			gara.aggiungiRisultato(nazioneOro, nazioneArgento, nazioneBronzo);
-			nazioneOro.aggiungiOro();
-			nazioneArgento.aggiungiArgento();
-			nazioneBronzo.aggiungiBronzo();
+			if (scelta) {
+				
+				Nazione nazioneOro = trovaNazione(MESS_NAZIONE_ORO, mieNazioni);
+				Nazione nazioneArgento = trovaNazione(MESS_NAZIONE_ARGENTO, mieNazioni);
+				Nazione nazioneBronzo = trovaNazione(MESS_NAZIONE_BRONZO, mieNazioni);
+				
+				Gara gara = mieGare.getGara(nomeGara);
+				gara.aggiungiRisultato(nazioneOro, nazioneArgento, nazioneBronzo);
+				nazioneOro.aggiungiOro();
+				nazioneArgento.aggiungiArgento();
+				nazioneBronzo.aggiungiBronzo();
+				
+			}
 			
 		}
 		
 	}
 	
-	public static Nazione assegnaMedaglia(String messaggio, ElencoNazioni mieNazioni) {
+	private static Nazione trovaNazione(String messaggio, ElencoNazioni mieNazioni) {
 		
 		System.out.println(messaggio);
 		String nazione = null;
@@ -114,4 +122,11 @@ public class MedagliereMain {
 		return mieNazioni.getNazione(nazione);
 		
 	}
+	
+	private static void showMedagliere(ElencoNazioni mieNazioni, ElencoGare mieGare) {
+		
+		System.out.println(mieNazioni.toString);
+		
+	}
+	
 }
