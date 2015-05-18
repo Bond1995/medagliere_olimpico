@@ -2,10 +2,22 @@ import ing.unibs.esercitazioni.mylib.*;
 
 public class MedagliereMain {
 
-	public static final String SALUTO = "Ciao e Benvenuto nel tuo Medagliere Olimpico!\n";
-	public static final String ARRIVEDERCI = "Grazie e arrivederci!";
-	public static final String TITOLO = "Elenco funzioni:\n";
-	public static final String ERRORE_SCELTA = "Attenzione: e' stata scelta un'opzione inesistente!";
+	private static final String SALUTO = "Ciao e Benvenuto nel tuo Medagliere Olimpico!\n";
+	private static final String ARRIVEDERCI = "Grazie e arrivederci!";
+	private static final String TITOLO = "Elenco funzioni:\n";
+	private static final String ERRORE_SCELTA = "Attenzione: e' stata scelta un'opzione inesistente!";
+	private static final String MESS_NUOVA_NAZIONE = "Inserisci il nome della nuova nazione:";
+	private static final String ERRORE_NAZIONE_DOPPIA = "Attenzione: la nazione inserita è già presente!";
+	private static final String MESS_NUOVA_GARA = "Inserisci il nome della nuova gara:";
+	private static final String ERRORE_GARA_DOPPIA = "Attenzione: la gara inserita è già presente!";
+	private static final String MESS_INSERISCI_GARA = "Inserisci il nome della gara:";
+	private static final String ERRORE_NAZIONE_NON_PRESENTE = "Attenzione: la nazione inserita non è presente in elenco!";
+	private static final String ERRORE_GARA_NON_PRESENTE = "Attenzione: la gara inserita non è presente in elenco!";
+	private static final String RICHIESTA_NUOVO_RISULTATO = "La gara inserita ha già un risultato. Vuoi sovrascriverlo?";
+	private static final String MESS_NAZIONE_ORO = "Inserisci la nazione a cui assegnare la medaglia d'oro:";
+	private static final String MESS_NAZIONE_ARGENTO = "Inserisci la nazione a cui assegnare la medaglia d'argento:";
+	private static final String MESS_NAZIONE_BRONZO = "Inserisci la nazione a cui assegnare la medaglia di bronzo:";
+	
 	
 	public static final String[] VOCI = {"Esci", "Aggiungi nazione", "Aggiungi gara", "Inserisci risultato", "Visualizza medagliere"};
 	
@@ -29,7 +41,7 @@ public class MedagliereMain {
 		
 	}
 	
-	private static void eseguiScelta(int scelta) {
+	private static void eseguiScelta(int scelta, ElencoNazioni mieNazioni, ElencoGare mieGare) {
 		
 		switch (scelta) {
 		
@@ -52,7 +64,7 @@ public class MedagliereMain {
 		System.out.println(MESS_NUOVA_NAZIONE);
 		String nomeNazione = MyUtil.leggiStringaConSpazi();
 		
-		if (mieNazioni.contiene(nomeNazione)) System.out.println(ERRORE_NAZIONE_DOPPIA);
+		if (mieNazioni.presente(nomeNazione)) System.out.println(ERRORE_NAZIONE_DOPPIA);
 		else {
 			
 			Nazione nuovaNazione = new Nazione(nomeNazione);
@@ -67,7 +79,7 @@ public class MedagliereMain {
 		System.out.println(MESS_NUOVA_GARA);
 		String nomeGara = MyUtil.leggiStringaConSpazi();
 		
-		if (mieGare.contiene(nomeGara)) System.out.println(ERRORE_GARA_DOPPIA);
+		if (mieGare.presente(nomeGara)) System.out.println(ERRORE_GARA_DOPPIA);
 		else {
 			
 			Gara nuovaGara = new Gara(nomeGara);
@@ -83,10 +95,10 @@ public class MedagliereMain {
 		String nomeGara = MyUtil.leggiStringaConSpazi();
 		boolean scelta = true;
 		
-		if (!mieGare.contiene(nomeGara)) System.out.println(ERRORE_GARA_NON_PRESENTE);
+		if (!mieGare.presente(nomeGara)) System.out.println(ERRORE_GARA_NON_PRESENTE);
 		else {
 			
-			if (mieGare.getNazione(nomeGara).haRisultato)
+			if (mieGare.getGara(nomeGara).haRisultato)
 				scelta = MyUtil.yesOrNo(RICHIESTA_NUOVO_RISULTATO);
 			
 			if (scelta) {
@@ -115,17 +127,17 @@ public class MedagliereMain {
 		do {
 			
 			nazione = MyUtil.leggiStringaConSpazi();
-			if (!mieNazioni.contiene(nazione)) System.out.println(ERRORE_NAZIONE_NON_PRESENTE);
+			if (!mieNazioni.presente(nazione)) System.out.println(ERRORE_NAZIONE_NON_PRESENTE);
 		
-		} while (!mieNazioni.contiene(nazione));
+		} while (!mieNazioni.presente(nazione));
 		
 		return mieNazioni.getNazione(nazione);
 		
 	}
 	
-	private static void showMedagliere(ElencoNazioni mieNazioni, ElencoGare mieGare) {
+	private static void showMedagliere(ElencoNazioni mieNazioni) {
 		
-		System.out.println(mieNazioni.toString);
+		System.out.println(mieNazioni.toString());
 		
 	}
 	
