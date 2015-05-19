@@ -36,7 +36,7 @@ public class ElencoNazioni {
 	public Nazione getNazione(String nomeCercato) {
 		
 		for (Nazione n: elencoNazioni)
-			if (n.getNome().equals(nomeCercato)) return g;
+			if (n.getNome().equals(nomeCercato)) return n;
 		
 		return null;
 		
@@ -46,7 +46,7 @@ public class ElencoNazioni {
 		
 		for (int i = elencoNazioni.size() - 1; i >= 0; i--)
 			for (int j = 0; j < i; j++)
-				if (elencoNazioni.get(j).miglioreDi(elencoNazioni.get(j + 1))) {
+				if (!(elencoNazioni.get(j).meglioDi(elencoNazioni.get(j + 1)))) {
 					
 					Nazione temp = elencoNazioni.get(j);
 					elencoNazioni.set(j, elencoNazioni.get(j + 1));
