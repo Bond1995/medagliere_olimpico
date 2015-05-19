@@ -109,9 +109,9 @@ public class MedagliereMain {
 				
 				Gara gara = mieGare.getGara(nomeGara);
 				gara.aggiungiRisultato(nazioneOro, nazioneArgento, nazioneBronzo);
-				nazioneOro.aggiungiOro();
-				nazioneArgento.aggiungiArgento();
-				nazioneBronzo.aggiungiBronzo();
+				nazioneOro.aggiungiMedaglia(0);
+				nazioneArgento.aggiungiMedaglia(1);
+				nazioneBronzo.aggiungiMedaglia(2);
 				
 			}
 			
