@@ -34,4 +34,9 @@ public class ElencoGare {
 		
 	}
 	
+	public int getNumeroGare() {
+		
+		return elencoGare.size();
+		
+	}
 }
