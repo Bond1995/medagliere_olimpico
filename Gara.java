@@ -30,5 +30,9 @@ public class Gara {
 		return nazioniPremiate;
 	}
 	
-	
+	public String getNome() {
+		
+		return nome;
+		
+	}
 }
